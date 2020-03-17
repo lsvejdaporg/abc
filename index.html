@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>ABC</title>
+    <script>
+        const HOST = window.location.protocol + "//" + window.location.hostname + ((window.location.port) ? ":" + window.location.port : "");
+        function vystupA(s) {
+            document.getElementById("vystupA").innerHTML += s+"...";
+        }
+        function b() {
+            vystupA("bStart")
+            let url = `${HOST}/b`;
+            fetch(url).then(function (response) {
+                response.text().then(function (text) {
+                    let obj = JSON.parse(text);
+                    document.getElementById("vystupB").innerHTML = text;
+                    vystupA("bFetch")
+                });
+            });
+            vystupA("bEnd")
+        }
+        function c() {
+            vystupA("cStart")
+            let url = `${HOST}/c`;
+            fetch(url).then(function (response) {
+                response.text().then(function (text) {
+                    let obj = JSON.parse(text);
+                    document.getElementById("vystupC").innerHTML = text;
+                    vystupA("cFetch")
+                });
+            });
+            vystupA("cEnd")
+        }
+        function a() {
+            vystupA("a volá b()");
+            b();
+            vystupA("a volá c()");
+            c();
+            vystupA("aEnd")
+        }
+
+    </script>
+</head>
+<body onload="a()">
+
+<h1>ABC</h1>
+<div id="vystupA">...</div>
+<br><br>
+<div id="vystupB">...</div>
+<div id="vystupC">...</div>
+
+</body>
+</html>
